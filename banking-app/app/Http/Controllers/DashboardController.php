@@ -14,8 +14,23 @@ class DashboardController extends Controller
      */
     public function index(Request $request)
     {
+        
+        $userId = $request->user()->id;
 
-        return Inertia::render('Dashboard');
+
+        $transactions = Transaction::where('sender_id', $userId)
+        ->orWhere('receiver_id', $userId)
+        ->orderBy('created_at', 'desc')
+        ->with([
+            'sender:id,name',
+            'receiver:id,name'
+        ])
+        ->get();
+    
+
+        
+
+        return Inertia::render('Dashboard', ['transactions' => $transactions]);
     }
 
     /**

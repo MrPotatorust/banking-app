@@ -16,8 +16,8 @@ return new class extends Migration
             $table->id();
             $table->timestamp('created_at')->useCurrent();
             $table->float('amount', 2);
-            $table->foreignIdFor(User::class, 'sender')->constrained()->onDelete('no action');
-            $table->foreignIdFor(User::class, 'receiver')->constrained();
+            $table->foreignIdFor(User::class, 'sender_id')->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(User::class, 'receiver_id')->constrained()->cascadeOnDelete();
         });
     }
 

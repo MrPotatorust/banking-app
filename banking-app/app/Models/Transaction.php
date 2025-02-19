@@ -13,16 +13,16 @@ class Transaction extends Model
 
     protected $fillable = [
         'amount',
-        'sender',
-        'receiver'
+        'sender_id',
+        'receiver_id'
     ];
 
 
     public function sender(){
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class, 'sender_id');
     }
 
     public function receiver(){
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class, 'receiver_id');
     }
 }

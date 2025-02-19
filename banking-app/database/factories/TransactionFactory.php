@@ -20,8 +20,8 @@ class TransactionFactory extends Factory
 
         return [
             'amount' => fake()->randomFloat(2, 10, 1000000),
-            'sender' => fake()->numberBetween(1, User::count()),
-            'receiver' => fake()->numberBetween(1, User::count())
+            'sender_id' => fake()->numberBetween(1, User::count()),
+            'receiver_id' => fake()->numberBetween(1, User::count())
         ];
     }
 }
