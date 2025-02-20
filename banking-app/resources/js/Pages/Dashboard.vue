@@ -1,10 +1,16 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head } from "@inertiajs/vue3";
+import { Head, router } from "@inertiajs/vue3";
+import { ref } from "vue";
 
 const props = defineProps(["transactions"]);
 
-console.log(props.transactions);
+const transactionAmount = ref("");
+const transactionReceiverIban = ref("");
+
+function makeTransaction() {
+    router.post(route("transactions.store"));
+}
 </script>
 
 <template>
@@ -26,12 +32,34 @@ console.log(props.transactions);
         </div>
 
         <div>
-            <ul>
-                <li v-for="transaction in transactions">
-                    <p>{{ transaction.amount }}</p>
-                    <p>{{ transaction.sender.name }}</p>
-                </li>
-            </ul>
+            <div>
+                <form @submit.prevent="makeTransaction">
+                    <input
+                        v-model="transactionAmount"
+                        type="number"
+                        placeholder="199.99"
+                        required
+                    />
+                    <input
+                        v-model="transactionReceiverIban"
+                        type="text"
+                        placeholder="SK898989435435453"
+                        required
+                    />
+                    <button>Send</button>
+                </form>
+            </div>
+            <div>
+                <h2>transactions</h2>
+                <ul>
+                    <li v-for="transaction in transactions">
+                        <p>Amount: {{ transaction.amount }}$</p>
+                        <p>Sender: {{ transaction.sender.name }}</p>
+                        <p>Receiver: {{ transaction.receiver.name }}</p>
+                        -----------------------------------------
+                    </li>
+                </ul>
+            </div>
         </div>
     </AuthenticatedLayout>
 </template>

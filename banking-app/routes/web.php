@@ -19,6 +19,10 @@ Route::get('/', function () {
 Route::get('/dashboard', [DashboardController::class, 'index'])
 ->middleware(['auth', 'verified'])->name('dashboard.index');
 
+Route::resource('transactions', TransactionController::class)
+->middleware(['auth', 'verified']);
+
+
 // Route::get('/dashboard', function () {
 //     return Inertia::render('Dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
